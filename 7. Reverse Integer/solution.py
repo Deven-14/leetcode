@@ -9,16 +9,14 @@ class Solution:
         if x < 0:
             n_abs_min = n
             n_abs_min_str = str(n_abs_min)
-            n_abs_min_len = len(n_abs_min_str)
-            if (x_abs_len < n_abs_min_len or x_abs_rev <= n_abs_min_str):
+            if (x_abs_len < len(n_abs_min_str) or x_abs_rev <= n_abs_min_str):
                 return int("-" + x_abs_rev)
             else:
                 return 0
         elif x > 0:
             n_abs_max = n-1
             n_abs_max_str = str(n_abs_max)
-            n_abs_max_len = len(n_abs_max_str)
-            if (x_abs_len < n_abs_max_len or x_abs_rev <= n_abs_max_str):
+            if (x_abs_len < len(n_abs_max_str) or x_abs_rev <= n_abs_max_str):
                 return int(x_abs_rev)
             else:
                 return 0
