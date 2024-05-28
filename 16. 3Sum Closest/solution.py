@@ -12,29 +12,20 @@ class Solution:
             if target >= 0 and nums[i] > target:
                 break
             
-            for j in range(i+1, n-1):
-                if j > i+1 and nums[j] == nums[j-1]:
-                    continue
+            j, k = i+1, n-1
+            while j < k:
+                sum_i_j_k = nums[i] + nums[j] + nums[k]
+                curr_diff = abs(target - sum_i_j_k)
                 
-                sum_i_j = nums[i] + nums[j]
-                if target >= 0 and sum_i_j > target:
-                    break
+                if curr_diff < diff:
+                    diff = curr_diff
+                    closest_to_target = sum_i_j_k
                 
-                left, right = j+1, n-1
-                while left <= right:
-                    mid = (left + right) // 2
-                    sum_i_j_k = sum_i_j + nums[mid]
-                    curr_diff = abs(target - sum_i_j_k)
-                    
-                    if curr_diff < diff:
-                        diff = curr_diff
-                        closest_to_target = sum_i_j_k
-                    
-                    if sum_i_j_k > target:
-                        right = mid-1
-                    elif sum_i_j_k < target:
-                        left = mid+1
-                    else:
-                        return target
+                if sum_i_j_k > target:
+                    k -= 1
+                elif sum_i_j_k < target:
+                    j += 1
+                else:
+                    return target
         
         return closest_to_target
