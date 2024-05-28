@@ -20,18 +20,21 @@ class Solution:
                 if target >= 0 and sum_i_j > target:
                     break
                 
-                for k in range(j+1, n):
-                    if k > j+1 and nums[k] == nums[k-1]:
-                        continue
-                    
-                    sum_i_j_k = sum_i_j + nums[k]
+                left, right = j+1, n-1
+                while left <= right:
+                    mid = (left + right) // 2
+                    sum_i_j_k = sum_i_j + nums[mid]
                     curr_diff = abs(target - sum_i_j_k)
                     
                     if curr_diff < diff:
                         diff = curr_diff
                         closest_to_target = sum_i_j_k
                     
-                    if target >=0 and sum_i_j_k > target:
-                        break
+                    if sum_i_j_k > target:
+                        right = mid-1
+                    elif sum_i_j_k < target:
+                        left = mid+1
+                    else:
+                        return target
         
         return closest_to_target
