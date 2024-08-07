@@ -1,0 +1,3 @@
+n_2 = n // 2
+letters[:n_2] == letters[:-n_2-1:-1]
+n/2 letters from the left and n/2 letters from the right
