@@ -1,3 +1,13 @@
 n_2 = n // 2
 letters[:n_2] == letters[:-n_2-1:-1]
 n/2 letters from the left and n/2 letters from the right
+
+def isPalindrome(l, r):
+    while l < r and s[l] == s[r]:
+        l += 1
+        r -= 1
+    
+    if l < r:
+        return False
+    
+    return True
