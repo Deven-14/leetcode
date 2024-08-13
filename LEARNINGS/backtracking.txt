@@ -1,0 +1,1 @@
+if there is a condition being checked during backtracking, that condition can be cached as that condition will be checked multiple times, so put that condition in a function and then add @cache to it
