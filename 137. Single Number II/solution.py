@@ -23,3 +23,18 @@ class Solution:
 
 # * instead of defaultdict we could use Counter also
 
+# https://leetcode.com/problems/single-number-ii/solutions/3714928/bit-manipulation-c-java-python-beginner-friendly
+# BIT MANIPULATOR SOLUITON
+
+
+from collections import defaultdict
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        ones = 0
+        twos = 0
+
+        for num in nums:
+            ones ^= num & ~twos
+            twos ^= num & ~ones
+        
+        return ones
