@@ -1,1 +1,5 @@
 if there is a condition being checked during backtracking, that condition can be cached as that condition will be checked multiple times, so put that condition in a function and then add @cache to it
+
+MOST OF THE TIME, IF IT IS TIMING OUT FOR A BACKTRACING PROBLEM THEN TRY CACHING IT!
+
+BACKTRACKING WITH CACHING IS MEMOIZATION
