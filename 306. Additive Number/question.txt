@@ -1,4 +1,6 @@
-=Medium
+306. Additive Number
+Solved
+Medium
 Topics
 Companies
 An additive number is a string whose digits can form an additive sequence.
