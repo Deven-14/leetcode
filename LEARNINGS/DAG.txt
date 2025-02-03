@@ -1,0 +1,3 @@
+Directed Acyclic Graph, ideas to think through
+
+1. Topological sorting
