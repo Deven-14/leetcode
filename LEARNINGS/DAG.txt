@@ -1,3 +1,5 @@
 Directed Acyclic Graph, ideas to think through
 
 1. Topological sorting
+
+// TODO: make notes for BFS Topological sorting and DFS Topological sorting.
