@@ -40,3 +40,35 @@ class Solution:
                 max_profit = profit
         
         return max_profit
+
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        min_stock = prices[0]
+        max_profit = 0
+
+        for i in range(1, len(prices)):
+            if prices[i] < min_stock:
+                min_stock = prices[i]
+            elif (profit := prices[i] - min_stock) > max_profit:
+                max_profit = profit
+
+        return max_profit
+
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        min_stock = prices[0]
+        max_stock = prices[0]
+        max_profit = 0
+
+        for price in prices:
+            if price < min_stock:
+                min_stock = price
+                max_stock = price
+            
+            elif price > max_stock:
+                max_profit = max(max_profit, price - min_stock)
+                max_stock = price
+
+        return max_profit
