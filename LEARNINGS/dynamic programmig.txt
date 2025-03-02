@@ -1,3 +1,4 @@
 
 Questions:
 70. Climbing Stairs
+118. Pascal's Triangle
