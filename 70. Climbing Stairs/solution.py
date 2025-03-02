@@ -25,3 +25,20 @@ class Solution:
             a, b = b, a + b
         
         return b
+
+
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        if n == 1:
+            return 1
+        
+        if n == 2:
+            return 2
+        
+        prev_2nd, prev = 1, 2
+        for _ in range(3, n+1):
+            current = prev + prev_2nd
+            prev_2nd = prev
+            prev = current
+        
+        return current
