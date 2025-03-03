@@ -6,3 +6,4 @@ Questions:
 121. Best Time to Buy and Sell Stock
 338. Counting Bits
 392. Is Subsequence
+746. Min Cost Climbing Stairs
