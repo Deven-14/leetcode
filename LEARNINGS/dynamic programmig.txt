@@ -9,3 +9,4 @@ Questions:
 746. Min Cost Climbing Stairs
 509. Fibonacci Number
 1025. Divisor Game
+2900. Longest Unequal Adjacent Groups Subsequence I
