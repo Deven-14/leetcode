@@ -8,3 +8,4 @@ Questions:
 392. Is Subsequence
 746. Min Cost Climbing Stairs
 509. Fibonacci Number
+1025. Divisor Game
