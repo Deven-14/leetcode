@@ -13,3 +13,11 @@ class Solution:
 
 # if odd -> not of i-1 (second) coz n % 1 == 0
 # if even -> not of ((i-1) and (i-2)) coz n % 1 == 0 or n % 2 == 0
+
+
+class Solution:
+    def divisorGame(self, n: int) -> bool:
+        return n % 2 == 0
+    
+
+# https://leetcode.com/problems/divisor-game/solutions/274606/java-c-python-return-n-2-0/comments/262374/
