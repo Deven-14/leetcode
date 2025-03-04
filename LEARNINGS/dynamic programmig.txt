@@ -12,3 +12,4 @@ Questions:
 2900. Longest Unequal Adjacent Groups Subsequence I
 1137. N-th Tribonacci Number
 1668. Maximum Repeating Substring
+5. Longest Palindromic Substring (not exactly)
