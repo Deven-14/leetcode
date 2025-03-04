@@ -23,3 +23,29 @@ class Solution:
             longest_str = longest_str if len(longest_str) >= sub_str_length else s[left+1:right]
     
         return longest_str
+
+
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        substring = s[0]
+        n = len(s)
+
+        for i in range(1, n):
+
+            j, k = i, i
+            while j >= 0 and k < n and s[j] == s[k]:
+                j -= 1
+                k += 1
+            
+            if (k-j) > len(substring):
+                substring = s[j+1:k]
+            
+            j, k = i-1, i
+            while j >= 0 and k < n and s[j] == s[k]:
+                j -= 1
+                k += 1
+            
+            if (k-j) > len(substring):
+                substring = s[j+1:k]
+
+        return substring
