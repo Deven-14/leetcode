@@ -54,3 +54,27 @@ class Solution:
         output = []
         self.generate_parenthesis_backtrack(n, output)
         return output
+
+# 0 ms
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        parenthesis = []
+        stack = []
+
+        def backtrack(n_open = 0, n_closed = 0):
+            if n_open == n_closed == n:
+                parenthesis.append("".join(stack))
+                return
+            
+            if n_open < n:
+                stack.append("(")
+                backtrack(n_open + 1, n_closed)
+                stack.pop()
+            
+            if n_closed < n_open:
+                stack.append(")")
+                backtrack(n_open, n_closed + 1)
+                stack.pop()
+        
+        backtrack()
+        return parenthesis
