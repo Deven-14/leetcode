@@ -13,3 +13,19 @@ Questions:
 1137. N-th Tribonacci Number
 1668. Maximum Repeating Substring
 5. Longest Palindromic Substring (not exactly)
+
+
+
+Pointers:
+
+1. Recursive with memoization - top down approach (20, 19, 18,... 1)
+    1.1 this can also be done iteratively with tabulation but we have to run the loop backwards (20, 19, 18.... 1)
+2. Iterative with Tabulation - bottom up approach (1, 2, 3,... 20)
+
+
+3. When a value depends on the ahead value (i+1 / i+2 value), we should use method 1 (Recursive with memoization)
+    3.1 we could also use iteration with tabulation, with the loop running backwards (20, 19, 18,... )
+
+
+4. WHEN EVER THE PROBLEM IS TOUGH/HARD, START WITH A RECURSIVE APPROACH.
+    4.1 FIRST RULE-OUT RECURSIVE AND ONLY THEN MOVE TO ITERATIVE.
