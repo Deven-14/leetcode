@@ -1,3 +1,7 @@
 TREES
 
-1. Level Order Traversel - BFS
+1. Level Order Traversel - BFS (while loop with queue)
+2. DFS & Iterative dfs (while loop with stack)
+    2.1 preorder
+    2.2 inorder
+    2.3 postorder
