@@ -1,0 +1,4 @@
+O(N) doesn't mean one swipe
+it could be 1/2/3 O(N), basically constant times O(N), remember you can traverse the array a constant number of times to get to the solution.
+
+DON'T DO PRE-MATURE OPTIMIZATION, GO ONE BY ONE AND THING ABOUT THE SOLUTIONS AND THEIR TIME COMPLEXITIES AND THEN OPTIMIZE.
