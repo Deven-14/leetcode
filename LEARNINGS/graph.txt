@@ -1,0 +1,134 @@
+Dijkstra's Algorithm - Shortest Path  (Single Source)
+    one node to all nodes, no negative weights and cycles
+    1. doesn't work for negative weights
+    2. doesn't work for negative cycles
+    3. Priority Queue - whenever a min distance is found add that to the PQ - (distance, node)
+    4. greedy algo
+    5. start from source, push (S, 0) to PQ
+    6. while min_heap:
+        1. distance, node = pop from Queue
+        2. if visited - skip
+        3. update the distance array of the "distance to node" with "distance"
+        4. visit all the adj and 
+            1. if visited - skip
+            2. push (distance + distance b/w node & adj node, adj node) into PQ
+        5. again step 6 occurs until PQ is empty
+    7. return distance once complete
+    8. if you need the path too, then save another array called parents, 
+        1. init parents[i] = i
+        2. update the parent along with the distance in 6.3 step
+        3. do a for loop at the from the last updated value in the while loop and then traverse back to S.
+    9. time complexity = O((V + E) log V)
+        1. O(V log V) for extracting nodes from the heap.
+        2. O(E log V) for updating distances and pushing neighbors into the heap.
+
+
+
+Bellman Ford - Shortest Path (Single Source)
+    one node to all nodes, negative weights allowed, no negative cycles
+    1. Better than  Dijikstra's
+    2. works with negative weights
+    3. doesn't work with negative cycles
+    4. not a greedy algo
+
+    Theory = There can be ATMOST V-1 edges in one of our paths. (V vertices)
+    S -> A -> B -> D, 4 vertices, 3 edges.
+    V or more edges => cycle present
+    so, if we iterate V-1 times, we are guarenteed to find the shortest path - Theory
+
+    5. algo:
+    6. distance = [infinity] * nodes, 
+        1. distance[S] = 0 # s -> s = 0
+    7. we iterate atleat v-1 times, for each iteration we visit all edges, 
+        1. best way to do that is visit all nodes and look at their outgoing edges
+        2. when we have visited all nodes, we have guarenteed to have seen all the edges
+    8. for each iteraction, visit each node:
+        1. if the distance of that node is infinity, we don't know how to reach that node yet, so skip for now.
+        2. for the nodes which we have distance, 
+            1. update the distance from that node to its outgoing edges to adj nodes only if the distance decreases, 
+            2. distance + distance b/w node to adj node
+    9. we don't need to wait for all the v-1 round to get completed, we can break if in any iteration there are no updates 
+    10. time complexity O(V * E)
+
+    11. Steps to Detect Negative Cycles
+        Run Bellman-Ford for V-1 iterations to relax all edges.
+        Perform one extra iteration:
+            If we can still relax an edge, a negative cycle exists.
+        If no negative cycle is found, we can safely run Dijkstra’s algorithm.
+
+
+
+
+Shortest Path Faster Algorithm - (Single Source)
+    one node to all nodes, negative weights allowed, no negative cycles
+
+    1. combination of Dijkstra's and Bellman ford (kinda), improvement over bellman ford
+    2. start from source, push (S, 0) to Queue ******
+    3. while queue:
+        1. distance, node = pop from Queue
+        4. visit all the adj and 
+            1. if dist_src + d_bw_nodes < dist[adj_node], update the distance array of the "distance to node" with "distance"
+            2. push (distance + distance b/w node & adj node, adj node) into Queue
+        5. again step 6 occurs until PQ is empty
+    4. return distance once complete
+
+
+
+Floyd Warshall Algorithm - Shortest Path (all pairs)
+    shortest path b/w all pairs of vertices, negative weights allowed, no negative cycles
+    1. Directed weighted connected graph - applicable
+    2. algo:
+    3. dist = V * V array 2D
+    4. dist[i][i] = 0 # distance from node -> node = 0
+    5. add all edges to the 2d matrix
+        1. for (u, v, W) in edges:
+            dist[u][v] = W
+    6. for mid in range 1 to V:
+            for i in range 1 to V:
+                for j in range 1 to V:
+                    dist[i][j] = min(dist[i][j], dist[i][mid] + dist[mid][j])
+
+
+                    # other way below
+                
+                    if dist[i][j] > dist[i][mid] + dist[mid][j]:
+                        dist[i][j] = dist[i][mid] + dist[mid][j]
+    7. done
+    8. time complexity O(V^3)
+
+
+
+Ford-Fulkerson - Maximum Flow in a flow network
+    1. Minimum cut
+    2. Residual Graph
+    3. source -> sink
+
+
+Kruskal's Algorithm - Minimum Spanning Tree
+    1. pick smallest edge
+    2. next pick smallest edge again that doesn't create a cycles
+    3. how to check if it creates a cycle - if both the vertices of that edge are already present in the selected smallest edges then it creates a cycle
+        5. use DijointSetUnion - UnionFind using rank/size
+    4. keep adding until all nodes are not present in the dict or something
+    5. this algo dependends on the sorting of edges, could be done using merge sort
+    6. so, time complexity will be O(ElogE)
+    7. time complexity: O(n^2logn) or O(ElogE)
+    8. space complexity: O(n^2) or O(E), E ~ V^2 in worst case as each V can be connected to all other V = V * (V-1) ~ V^2
+
+
+
+Prim's Algorithm - Minimum Spanning Tree (remove cycles)
+    1. greedy algo
+    2. pick a node (A), have a visited array and make A visited
+    3. visit adj of A 
+        4. choose the edge with the minimum weight connected to an UNVISITED NODE
+        5. add the node to the visited list (B)
+    4. now choose the edge with the minimum weight connected to an UNVISITED NODE and (A or B)... lets say C.
+    5. now choose the edge with the minimum weight connected to an UNVISITED NODE and (A or B or C)... lets say D.
+    6. so on... (by using min_heap)
+    7. stop once all the nodes are visited *********
+    8. could you heap (weight, A, B)
+    9. O(VlogV + ElogV) ~ O(ElogV) ~ O(V^2 logV)
+    10. time complexity: O(n^2) or O(E)
+    11. space complexity: O(n^2) or O(E), E ~ V^2 in worst case as each V can be connected to all other V = V * (V-1) ~ V^2
+
