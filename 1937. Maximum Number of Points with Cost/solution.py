@@ -274,3 +274,38 @@ class Solution:
 
         return max(dp)
 
+
+class Solution:
+
+    def cal_left_max(self, dp, left_max):
+        left_max[0] = dp[0]
+
+        for i in range(1, len(dp)):
+            left_max[i] = max(dp[i], left_max[i-1] - 1)
+            
+    
+    def cal_right_max(self, dp, right_max):
+        COLS = len(dp)
+        right_max[COLS-1] = dp[COLS - 1]
+
+        for i in range(COLS-2, -1, -1):
+            right_max[i] = max(dp[i], right_max[i+1] - 1)
+        
+
+    def maxPoints(self, points: List[List[int]]) -> int:
+        ROWS = len(points)
+        COLS = len(points[0])
+        
+        dp = points[0].copy()
+        left_max = [0] * COLS
+        right_max = [0] * COLS
+
+        for i in range(1, ROWS):
+            self.cal_left_max(dp, left_max)
+            self.cal_right_max(dp, right_max)
+
+            for j in range(COLS):
+                dp[j] = points[i][j] + max(left_max[j], right_max[j])
+
+        return max(dp)
+
