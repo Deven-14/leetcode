@@ -1,0 +1,17 @@
+input = [2, 2, 5, 5, 5, 4, 4, 4, 4, 4]
+
+max = 5
+
+count = [0, 0, 2, 0, 5, 3] len(5) based on max
+
+sums = [0, 0, 2, 2, 7, 10]
+
+sorted arry = [2, 2, 4, 4, 4, 4, 4, 5, 5, 5] len(of the input array) 
+
+we start a reverse loop for count arr, take 5 idx value i.e, 3 (no of 5s), then take the sums value 10-1 = 9 (idx where the first 5 should go), reduce both count arr and summs arr for 5 idx, 
+
+count = [0, 0, 2, 0, 5, 2, 0, 0, 0, 0]
+
+sums = [0, 0, 2, 2, 7, 9, 10, 10, 10, 10]
+
+continue the same procedure until the end   
