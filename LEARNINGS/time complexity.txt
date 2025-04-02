@@ -2,3 +2,8 @@ O(N) doesn't mean one swipe
 it could be 1/2/3 O(N), basically constant times O(N), remember you can traverse the array a constant number of times to get to the solution.
 
 DON'T DO PRE-MATURE OPTIMIZATION, GO ONE BY ONE AND THING ABOUT THE SOLUTIONS AND THEIR TIME COMPLEXITIES AND THEN OPTIMIZE.
+
+time complexity of backtracking / dfs / dp, would be the parameters of the recursive function:
+helper(i, target) - > O(n * sum(nums)), i -> [0, n), target -> (0, sum(nums))
+helper(r, c) -> O(ROWS * COLS)
+etc, this is only if we use @cache along with the helper
