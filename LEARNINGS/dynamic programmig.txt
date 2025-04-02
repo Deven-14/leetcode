@@ -29,3 +29,8 @@ Pointers:
 
 4. WHEN EVER THE PROBLEM IS TOUGH/HARD, START WITH A RECURSIVE APPROACH.
     4.1 FIRST RULE-OUT RECURSIVE AND ONLY THEN MOVE TO ITERATIVE.
+
+
+5. for WAYS questions, always do Ways[something] + ways[other] and have a base condition where the actual value is present
+    5.1 base like WAYS[0] = 1, WAYS[1] = 2
+    5.2 never have 1 + Ways[something] + ways[other] with WAYS[0] = 0, WAYS[1] = 0 (usually doesn't work)
