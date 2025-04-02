@@ -13,6 +13,11 @@ class Solution:
                 l = m + 1
         return l - 1 if (l and nums[l - 1] == target) else -1
 
+# * for upper bound, "=" should go to the "l" as upper bound should give the element greater than target
+# * so all "less than or equal to" will go to left
+# * VISE-VERSA for "lower bound"
+
+
 # bisect.bisect_right(nums, target)
 
 # * Lower Bound
