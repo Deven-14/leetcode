@@ -1,0 +1,114 @@
+from functools import cache
+
+class Solution:
+    def sol(self, k, A, n) -> int:
+        
+        @cache
+        def helper(i, energy):
+            if i == n:  
+                return 0  # Base case: No more days
+
+            # Option 1: Move ahead, but only if we have energy left
+            d1 = 0
+            if energy > 0:  
+                d1 = A[i] + helper(i + 1, energy - 1)
+
+            # Option 2: Stay put and gain 1 energy
+            d2 = helper(i + 1, energy + 1)
+
+            return max(d1, d2)
+
+        return helper(0, k)
+
+
+Converting a **recursive memoization** (top-down DP) solution to a **tabulation** (bottom-up DP) solution can be tricky, but here are **some key steps and pointers** to help with the process.
+
+---
+
+## **📌 Steps to Convert Recursion + Memoization to Tabulation**
+### **Step 1: Identify the State Variables**
+- In your recursive function, the parameters that **change** during the recursion define the **state**.
+- In your case:  
+  - `i` (current day) → corresponds to **rows** in the DP table.
+  - `energy` (remaining energy) → corresponds to **columns** in the DP table.
+
+---
+
+### **Step 2: Create a DP Table**
+- If `n = len(A)`, we define a **2D table `dp[i][energy]`**:
+  - `dp[i][e]` stores the **maximum distance** we can travel on day `i` with `e` energy left.
+  - The dimensions of `dp` are **(n+1) x (max possible energy + 1)**.
+
+---
+
+### **Step 3: Define the Base Case**
+- The last row (day `n`) in the DP table should be **initialized to `0`** because once we reach `n`, we cannot travel anymore.
+
+---
+
+### **Step 4: Fill the DP Table Bottom-Up**
+- Since recursion works **top-down**, tabulation works **bottom-up**.
+- We **iterate from the last day (`n-1`) to the first day (`0`)** and **fill the DP table iteratively**.
+
+- **Transition Formula (from recursion to iteration)**:
+  - If we **move forward**:  
+    \[
+    dp[i][e] = A[i] + dp[i + 1][e - 1] \quad \text{(only if \( e > 0 \))}
+    \]
+  - If we **stay put** (gain energy):
+    \[
+    dp[i][e] = \max(dp[i][e], dp[i + 1][e + 1])
+    \]
+
+- **Final answer** is stored in `dp[0][k]` (starting from day `0` with `k` energy).
+
+---
+
+## **✅ Tabulated Version (Bottom-Up DP)**
+```python
+class Solution:
+    def sol(self, k, A, n) -> int:
+        max_energy = k + n  # Max possible energy we can have
+        dp = [[0] * (max_energy + 1) for _ in range(n + 1)]
+        
+        for i in range(n - 1, -1, -1):  # Traverse days in reverse order
+            for e in range(max_energy):  # Energy cannot exceed max_energy
+                # Move forward if energy > 0
+                if e > 0:
+                    dp[i][e] = A[i] + dp[i + 1][e - 1]
+                
+                # Stay put and gain 1 energy
+                dp[i][e] = max(dp[i][e], dp[i + 1][e + 1])
+
+        return dp[0][k]
+```
+
+---
+
+## **📌 Key Differences Between Memoization and Tabulation**
+| Feature  | Recursive + Memoization | Iterative Tabulation |
+|----------|-----------------|------------------|
+| Approach | Top-down (solve subproblems as needed) | Bottom-up (solve small cases first) |
+| Storage  | Uses a **dictionary (cache)** or a 2D **DP array** | Uses a **2D DP table** |
+| Base Case | Handled in recursive calls | Explicitly initialized in DP table |
+| Iteration | Recursive function calls | Iterative loops |
+| Efficiency | Usually `O(n * k)`, but recursion can have overhead | Always `O(n * k)`, more efficient |
+| Stack Space | Uses recursive stack | Uses only DP array (no recursion) |
+
+---
+
+## **🚀 Summary of Key Pointers**
+1️⃣ **Identify State Variables** → Check which parameters are changing in recursion (`i, energy`).  
+2️⃣ **Define a DP Table** → Create a table `dp[i][e]` where `i` is the index (days) and `e` is the remaining energy.  
+3️⃣ **Set Base Case** → The last row (`dp[n][e]`) should be `0` since no movement is possible.  
+4️⃣ **Fill Table Bottom-Up** → Use loops to **iterate from `n-1` to `0`**, mimicking recursive calls.  
+5️⃣ **Use Transition Formula** → Convert recursive choices into iterative updates.  
+6️⃣ **Return the Answer from `dp[0][k]`** → This represents the **maximum distance possible starting from day `0` with `k` energy**.  
+
+---
+
+### **🔥 Advantage of Tabulation Over Memoization**
+- **Avoids recursion overhead** → No function call stack issues.
+- **More memory efficient** in some cases → Can use **1D DP instead of 2D** if we only depend on `dp[i+1]`.
+
+This method guarantees that **your solution runs efficiently** for `n < 1000`. 🚀
