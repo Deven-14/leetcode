@@ -1,0 +1,39 @@
+def abc(i, v = set()):
+    v.add(i)
+    print(v)
+
+abc(5) # {5}
+abc(10) # {10, 5}
+
+
+def abc(i, v = set()):
+    if i in v:
+        return
+    v.add(i)
+    abc(155, v)
+    print(v)
+
+abc(5) # {155, 5}
+abc(10) # {10, 155, 5}
+
+uses the same set
+
+
+v = set() is evaluated only once—at the time the function is defined, not each time it's called.
+
+That means every time you call abc() without passing a v argument, it reuses the same set object created during the function definition.
+
+
+
+def abc(i, v=None):
+    if v is None:
+        v = set()
+    v.add(i)
+    print(v)
+
+abc(5) # {5}
+abc(10) # {10}
+
+
+
+Yes! The same behavior happens with lists, dictionaries, or any mutable object used as a default argument in Python.
