@@ -55,3 +55,24 @@ class Solution:
         self.letter_combinations(list_of_letters, combinations)
 
         return combinations
+
+
+
+class Solution:
+
+    def letterCombinations(self, digits: str) -> List[str]:
+        if digits == "":
+            return []
+        
+        digits_to_letters = [None, None, "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"]
+        list_of_letters = [digits_to_letters[int(digit)] for digit in digits]
+        combinations = [[]]
+        
+        for letters in list_of_letters:
+            combinations = [
+                combination + [letter]
+                for letter in letters
+                for combination in combinations
+            ]
+
+        return ["".join(combination) for combination in combinations]
