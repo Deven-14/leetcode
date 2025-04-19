@@ -44,3 +44,10 @@ class Solution:
         return max_profit
     
 
+# https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/description/comments/1956066/
+
+# Take ex :- [1,4,7,8,6,4]
+# if you take (1, 8) , diff = 7
+# or if you take (1, 4), (4, 7), (7, 8), diff = 3 + 3 + 1 = 7
+
+# Going directly to 8, or going to 8 by adding all differences in between is same in result, so rather than thinking to jump, think it in this way.
