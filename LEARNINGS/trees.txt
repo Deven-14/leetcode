@@ -5,3 +5,11 @@ TREES
     2.1 preorder
     2.2 inorder
     2.3 postorder
+
+
+using nonlocal is very important, remembering its use cases are important
+questions
+    1. 501. Find Mode in Binary Search Tree
+        1. using nonlocal to track curr_val in a inorder traversal
+    2. 530. Minimum Absolute Difference in BST
+        1. using nonlocal to keep track of the prev ele in inorder tranversal
