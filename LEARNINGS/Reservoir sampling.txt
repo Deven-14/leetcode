@@ -1,0 +1,42 @@
+RESERVOIR SAMPLING
+
+Algorithm
+
+import random
+randomNumber = None
+i = 0 # count of nums
+
+while (receiving num from stream):
+    i += 1
+    randomIndex = random.randint(0, i - 1) # 0 <= randomIndex <= (i-1) # rand() % i
+    if randomIndex == i-1:
+        randomNumber = num
+
+return randomNumber
+
+
+https://www.youtube.com/watch?v=DWZqBN9efGg
+
+
+P(Ai) = P(Ai getting chosen at ith step) X P(Ai+1 not getting chosen) X P(Ai+2 not getting chosen) X ...
+P(Ai) = P(Ai getting chosen at ith step) X P(Ai not getting replaced by Ai+1, Ai+2, Ai+3...)
+
+
+P(Ai getting chosen at ith step) = 1 / i
+total outcomes = random.randint(0, i - 1) = i outcomes between [0, i)
+favorable outcome = (randomIndex == i-1) = 1
+therefore, 1 / i
+
+P(Ai+1 getting chosen) = 1 / i+1
+P(Ai+1 not getting chosen) = 1 - (1 / i+1)
+P(Ai+2 not getting chosen) = 1 - (1 / i+2)
+
+
+Hence, P(Ai) = 1/i X (1 - 1/i+1) X (1 - 1/i+2) X (1 - 1/i+3) .... (1 - 1/n)
+Take LCM,
+
+P(Ai) = 1/i X ((i+1 - 1)/i+1) X ((i+2 - 1)/i+2) X ((i+3 - 1)/i+3) .... ((n - 1)/n)
+P(Ai) = 1/i X (i/i+1) X (i+1 / i+2) X (i+2 / i+3) .... (n-1 / n)
+P(Ai) = 1/n  (others cancels out)
+
+
