@@ -26,4 +26,28 @@ class Solution:
             return min(left_min, right_min)
         
         return left_min if left_min != -1 else right_min
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def findSecondMinimumValue(self, root: Optional[TreeNode]) -> int:
+        if not root.left:
+            return -1
         
+        left, right = root.left.val, root.right.val
+        if left == root.val:
+            left = self.findSecondMinimumValue(root.left)
+        if right == root.val:
+            right = self.findSecondMinimumValue(root.right)
+        
+        if left == -1:
+            return right
+        if right == -1:
+            return left
+        
+        return min(left, right)
