@@ -58,3 +58,10 @@ class Solution:
                 curr_num_count = 1
         
         return count + min(curr_num_count, prev_num_count)
+
+
+# First, I count the number of 1 or 0 grouped consecutively.
+# For example "0110001111" will be [1, 2, 3, 4].
+
+# Second, for any possible substrings with 1 and 0 grouped consecutively, the number of valid substring will be the minimum number of 0 and 1.
+# For example "0001111", will be min(3, 4) = 3, ("01", "0011", "000111")
