@@ -181,3 +181,36 @@ class Solution:
 # * removing True or false in dfs as values are between 0.0 < values[i] <= 20.0
 # * because of the -1 in the dfs now, we won't even need dsu, but it makes it faster 
 # * as we don't need to go through the entire tree to identify if doesn't exist and then assign value -1
+
+
+class Solution:
+    def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
+        equations_to_values = { tuple(eq): value for eq, value in zip(equations, values) }
+        for (a, b), value in zip(equations, values):
+            equations_to_values[(b, a)] = 1 / value
+        
+        divisions = defaultdict(set)
+
+        for numerator, denominator in equations:
+            divisions[numerator].add(denominator)
+            divisions[denominator].add(numerator)
+
+        def dfs(qn, qd, visited):
+            if qn not in divisions:
+                return -1
+            
+            if qd in divisions[qn]:
+                return equations_to_values[(qn, qd)]
+            
+            visited.add(qn)
+            for denominator in divisions[qn]:
+                if denominator not in visited and (v := dfs(denominator, qd, visited)) > -1:
+                    return equations_to_values[(qn, denominator)] * v
+            
+            return -1
+        
+        answers = []
+        for qn, qd in queries:
+            answers.append(dfs(qn, qd, set()))
+        
+        return answers
