@@ -1,0 +1,4 @@
+
+no. of subsets = 2 ^ n
+
+no. of contiguous subarrays = n * (n + 1) / 2
