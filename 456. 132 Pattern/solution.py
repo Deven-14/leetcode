@@ -32,3 +32,4 @@ class Solution:
         return False
 
 
+# https://leetcode.com/problems/132-pattern/solutions/94071/single-pass-c-o-n-space-and-time-solution-8-lines-with-detailed-explanation
