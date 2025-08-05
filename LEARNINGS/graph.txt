@@ -132,3 +132,20 @@ Prim's Algorithm - Minimum Spanning Tree (remove cycles)
     10. time complexity: O(n^2) or O(E)
     11. space complexity: O(n^2) or O(E), E ~ V^2 in worst case as each V can be connected to all other V = V * (V-1) ~ V^2
 
+
+Maximum bipartite matching
+    1. S1, S2, -> 2 sets forming a bipartite
+    2.1 create a grid[S1][S2] of edges
+    2. matches array/dict
+    3. traverse through all of S2
+    4. for s2 in S2:
+        1. perform dfs on each, dfs to check if any question can be assigned to it.
+        2. dfs(s2, visited) 
+            1. for s1 in S1:
+                1. check if has edge and if not visited
+                    1. add s1 to visited
+                    2. check if s1 not in matches or if the s2 assigned to s1 can be assigned some other s1 dfs(matches[s1], visited) # this works because we marked s1 as visited, so it'll check for other s1 which is not present in matches
+                        1. return True
+            2. return False
+        3. if dfs is true, increment count
+    5. return count
