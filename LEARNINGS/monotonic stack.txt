@@ -1,0 +1,7 @@
+503. Next Greater Element II
+
+
+usually there is a for loop to append elements
+and a while loop inside the for loop to pop elements
+based on smaller eles (increasing monotonic stack)
+or greater eles (decreasing monotonic stack)
