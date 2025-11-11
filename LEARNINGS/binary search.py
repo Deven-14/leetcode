@@ -3,7 +3,7 @@
 
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
-        l, r = 0, len(nums)
+        l, r = 0, len(nums) # * NO -1, important coz l can be len(nums) as well
 
         while l < r:
             m = l + ((r - l) // 2)  
@@ -24,7 +24,7 @@ class Solution:
 
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
-        l, r = 0, len(nums)
+        l, r = 0, len(nums) # * NO -1, important coz l can be len(nums) as well
 
         while l < r:
             m = l + ((r - l) // 2)  
