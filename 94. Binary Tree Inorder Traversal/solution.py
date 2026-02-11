@@ -47,3 +47,29 @@ class Solution:
             node = curr.right
         
         return values
+    
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        node = root
+        values = []
+        stack = []
+
+        while node or stack:
+
+            while node:
+                stack.append(node)
+                node = node.left
+            
+            curr = stack.pop()
+            values.append(curr.val)
+            node = curr.right
+        
+        return values
