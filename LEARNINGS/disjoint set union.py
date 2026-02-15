@@ -1,7 +1,8 @@
 class DisjointSetUnion:
     def __init__(self, n):
         self.parents = [-1] * n # or list(rnage(n))
-        self.size = [0] * n
+        self.size = [1] * n # ! 1 not 0
+        # ! or rank
     
     def find(self, x):
         if self.parents[x] == -1: # or == x
