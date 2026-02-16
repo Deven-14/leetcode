@@ -1,0 +1,15 @@
+1. multiple types of parenthesis
+
+
+
+
+
+
+2. single parenthesis type questions
+ways to solve:
+    1. stack
+        usually stack of indices
+        becuase if there exists and open braket then the closing definitely matches it.
+
+    2. open_parenthesis count
+        could be recursive or with the help of for loop
