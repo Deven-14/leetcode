@@ -1,0 +1,30 @@
+1. Subarray sum equals k
+
+
+[a, b, c, d, e, f]
+
+Neetcode
+
+use prefix_sums to get the new sub array sum
+
+eg: sub array cde = k
+=> sub array cde = abcde - ab 
+and ab is already stored in prefix sums because we already visited integer
+
+
+this technique of using the previously visited & computed values can also be seen in other places like in sliding window
+Longest Substring Without Repeating Characters
+
+Input: s = "zxyzxyz"
+Output: 3
+Explanation: The string "xyz" is the longest without duplicate characters.
+
+we store the index of the characters already visited and left_max_idx variable, which keeps track of the left most duplicate character idx
+
+once we know that, we just do curr_idx - left_max_idx for the length of the string without duplicates
+
+whenever you are thinking that you need to look ahead for the same character / int, etc., instead keep traversing and then look back because you will already have data of the things you traversed and calculated
+
+
+Longest Repeating Character Replacement
+this as well, instead of looking ahead when the non-matching values will come, calculate and lookbehind when we cross that k value
