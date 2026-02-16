@@ -1,31 +1,153 @@
+Building adj list
+    1. adj = [[False] * COLS for _ in range(ROWS)]
+    2. adj = [[] for _ in range(ROWS)]
+        1. for edge in edges: adj[a].append(b)
+    3. adj = [set() for _ in range(ROWS)]
+    4. adj = defaultdict(list) | defaultdict(set)
+
+
+Short Note
+    1. BFS Topological Sort - Queue, indegree
+    2. DFS Topological Sort / Cycle Detection - cycle dict
+    3. Dijkstra's algorithm - minheap, curr_distance < distances[node]
+    4. Bellamn-Ford - (V-1) X (all edges) with IsUpdated for early stopping
+    5. SPFA - queue, in_queue
+        3, 4, 5 distance update happens when adding adj nodes
+        3, 4, 5 update distance only if it is smaller than already present
+    6. Floyd Warshall - mid, i, j
+    7. Kruskal - DisjointSetUnion, sort edges
+    8. Prim - minheap, double visited validation
+    9. Hierholzer - Euler Circuit (start and end should be same) - dfs with list pop
+    10. Maximum bipartite matching
+
+
+
+BFS / DFS / Multi-Source BFS / Binary Search + DFS
+
+
+Topological Sort - Khan's Algorithm - BFS
+    1. create adj list / defaultdict / set - based on need
+    2. based on edges list provided, create indegrees list / defaultdict / set - based on need
+    3. create queue - append leaf nodes - indegrees[node] == 0
+    4. while queue:
+        1. pop node
+        2. visit neighbors
+            1. indegree[neighbour] -= 1 # as we are poping node / leaf node
+            2. if indegree[neighbour] == 0:
+                1. append neighbour to queue # now this is leaf node
+
+def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        adj = [[] for _ in range(numCourses)]
+        indegrees = [0] * numCourses
+
+        for course, dependent_course in prerequisites:
+            adj[course].append(dependent_course)
+            indegrees[dependent_course] += 1
+        
+        queue = deque()
+        for course, indegree in enumerate(indegrees):
+            if indegree == 0:
+                queue.append(course)
+        
+        completed = 0
+        while queue:
+            course = queue.popleft()
+            completed += 1            
+            for dependent_course in adj[course]:
+                indegrees[dependent_course] -= 1
+                if indegrees[dependent_course] == 0:
+                    queue.append(dependent_course)
+        
+        return completed == numCourses
+
+
+
+
+Detect Cycle - DFS - # Topological sorting with cycle detection
+def detect_cycle(self, adj, cycle, node, order):
+    if node in cycle:
+        return cycle[node]
+    
+    cycle[node] = True
+    for adj_node in adj[node]:
+        if self.detect_cycle(adj, cycle, adj_node, order):
+            return True
+    
+    cycle[node] = False
+    order.append(node)
+    return False
+
+
+
+
 Dijkstra's Algorithm - Shortest Path  (Single Source)
     one node to all nodes, no negative weights and cycles
     1. doesn't work for negative weights
     2. doesn't work for negative cycles
     3. Priority Queue - whenever a min distance is found add that to the PQ - (distance, node)
     4. greedy algo
-    5. start from source, push (S, 0) to PQ
+    5. start from source, push (0, S) to PQ
+    5.1 distances = [infinity] * n
+    5.2 distances[S] = 0
     6. while min_heap:
-        1. distance, node = pop from Queue
-        2. if visited - skip
-        3. update the distance array of the "distance to node" with "distance"
-        4. visit all the adj and 
-            1. if visited - skip
-            2. push (distance + distance b/w node & adj node, adj node) into PQ
+        1. curr_distance, node = pop from Queue
+        2. if curr_distance > distances[node]: continue
+
+        2.1 if node == end_node: break # if we need distance to only one node
+
+        3. visit all the adj and 
+            1. distance = curr_distance + distance b/w node & adj_node
+            2. if distance < distances[adj_node]:
+                1. distances[adj_node] = distance
+                2. push (distance, adj node) into PQ
         5. again step 6 occurs until PQ is empty
     7. return distance once complete
     8. if you need the path too, then save another array called parents, 
-        1. init parents[i] = i
-        2. update the parent along with the distance in 6.3 step
-        3. do a for loop at the from the last updated value in the while loop and then traverse back to S.
+        1. init parents[i] = i OR None OR use dict{ node: None }
+        2. update the parent along with the distance in 6.3.2.1 step, 
+            1. parents[adj_node] = node
+        3. do a for loop at the from the last updated value in the while loop and then traverse back to S
+            1. end_node = parents[end_node]
     9. time complexity = O((V + E) log V)
         1. O(V log V) for extracting nodes from the heap.
         2. O(E log V) for updating distances and pushing neighbors into the heap.
 
 
+def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
+    adj = [[] for _ in range(n+1)]
+    
+    for (ui, vi, ti) in times:
+        adj[ui].append((vi, ti))
+    
+    # Dijkstra's algo
+    
+    # add the source node to the heapq
+    min_heap = [(0, k)] # k to k is 0
+    min_times = [float("inf")] * (n+1) # equavalent of distances
+    min_times[k] = 0
+
+    while min_heap:
+        curr_time, node = heapq.heappop(min_heap)
+        if curr_time > min_times[node]:
+            continue
+
+        for adj_node, adj_time in adj[node]:
+            time = curr_time + adj_time
+            if time < min_times[adj_node]:
+                min_times[adj_node] = time
+                heapq.heappush(min_heap, (time, adj_node))
+    
+    min_time_required = max(min_times[1:]) # for all nodes to recieve
+    # min for all nodes to receive will be max of min_times
+
+    return min_time_required if min_time_required != float("inf") else -1
+
+
+
+
 
 Bellman Ford - Shortest Path (Single Source)
-    one node to all nodes, negative weights allowed, no negative cycles
+    one node to all nodes, negative weights allowed, no negative cycles, can be used to detect negative cycles
     1. Better than  Dijikstra's
     2. works with negative weights
     3. doesn't work with negative cycles
@@ -57,20 +179,129 @@ Bellman Ford - Shortest Path (Single Source)
         If no negative cycle is found, we can safely run Dijkstra’s algorithm.
 
 
+def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
+    # Bellman Ford Algorithm with early stopping
+    min_times = [float("inf")] * (n + 1)
+    min_times[k] = 0
+
+    for _ in range(n - 1): # iterate atleast V-1 times
+        updates = False
+
+        for u, v, t in times: # iterate through all edges, sometimes, it could be using visiting all nodes with their outgoing edges
+            if min_times[u] == float("inf"): # we don't know how to reach 'u' yet
+                continue
+            
+            if min_times[u] + t < min_times[v]:
+                min_times[v] = min_times[u] + t
+                updates = True
+        
+        if not updates:
+            break
+    
+    min_time_required = max(min_times[1:]) # nodes [1, n]
+    return min_time_required if min_time_required != float("inf") else -1
+
+
 
 
 Shortest Path Faster Algorithm - (Single Source)
-    one node to all nodes, negative weights allowed, no negative cycles
+    one node to all nodes, negative weights allowed, no negative cycles, can be used to detect negative cycles
+    SPFA = Bellman–Ford with a queue, relaxing only the vertices whose distances actually changed.
+
+    Bellman–Ford: “Check everything repeatedly”
+        Bellman–Ford relaxes all edges V−1 times.
+    SPFA: “Only reprocess nodes whose distance improved”
+        If a node’s distance never changes → its edges are never checked again.
 
     1. combination of Dijkstra's and Bellman ford (kinda), improvement over bellman ford
     2. start from source, push (S, 0) to Queue ******
     3. while queue:
         1. distance, node = pop from Queue
         4. visit all the adj and 
-            1. if dist_src + d_bw_nodes < dist[adj_node], update the distance array of the "distance to node" with "distance"
+            1. if dist_src + d_bw_nodes < dist[adj_node], update the distance array of [node] with "distance"
             2. push (distance + distance b/w node & adj node, adj node) into Queue
         5. again step 6 occurs until PQ is empty
     4. return distance once complete
+
+    1. Initialize:
+        1. dist[source] = 0
+        2. dist[others] = ∞
+    2. Put source in a queue
+    3. While queue is not empty:
+        1. Pop u
+        2. For each edge u → v with weight w:
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+                if v not already in queue:
+                    push v into queue
+    4. Optional: count relaxations to detect negative cycles.
+    5. Avg O(E), worst O(VE)
+
+def spfa(n, edges, source):
+    adj = [[] for _ in range(n)]
+    for u, v, w in edges:
+        adj[u].append((v, w))
+
+    INF = float('inf')
+    dist = [INF] * n
+    in_queue = [False] * n
+
+    dist[source] = 0
+    q = deque([source])
+    in_queue[source] = True
+
+    while q:
+        u = q.popleft()
+        in_queue[u] = False
+
+        for v, w in adj[u]:
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+
+                if not in_queue[v]:
+                    q.append(v)
+                    in_queue[v] = True
+
+    return dist
+
+
+with negative cycle detection:
+
+def spfa(n, edges, source):
+    adj = [[] for _ in range(n)]
+    for u, v, w in edges:
+        adj[u].append((v, w))
+
+    INF = float('inf')
+    dist = [INF] * n
+    in_queue = [False] * n
+    count = [0] * n   # for negative cycle detection
+
+    dist[source] = 0
+    q = deque([source])
+    in_queue[source] = True
+
+    while q:
+        u = q.popleft()
+        in_queue[u] = False
+
+        for v, w in adj[u]:
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+
+                if not in_queue[v]:
+                    q.append(v)
+                    in_queue[v] = True
+                    count[v] += 1
+
+                    # Negative cycle detection
+                    if count[v] > n:
+                        return "Negative cycle detected"
+
+    return dist
+
+
+
 
 
 
@@ -96,6 +327,28 @@ Floyd Warshall Algorithm - Shortest Path (all pairs)
     7. done
     8. time complexity O(V^3)
 
+def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
+    # Floyd Warshall Algorithm
+    min_times = [[float("inf")] * (n + 1) for _ in range(n + 1)]
+
+    for i in range(n + 1):
+        min_times[i][i] = 0
+    
+    for (u, v, t) in times:
+        min_times[u][v] = t
+    
+    for mid in range(1, n+1):
+        for i in range(1, n+1):
+            for j in range(1, n+1):
+                min_times[i][j] = min(min_times[i][j], min_times[i][mid] + min_times[mid][j])
+    
+    min_time_required = max(min_times[k][1:]) # [1:] coz starts from [1:n]
+    return min_time_required if min_time_required != float("inf") else -1
+
+
+
+
+
 
 
 Ford-Fulkerson - Maximum Flow in a flow network
@@ -103,6 +356,12 @@ Ford-Fulkerson - Maximum Flow in a flow network
     2. Residual Graph
     3. source -> sink
 
+
+
+
+
+
+A Minimum Spanning Tree (MST) is a subset of edges from a connected, edge-weighted undirected graph that connects all vertices together, without any cycles, and with the minimum possible total edge weight.
 
 Kruskal's Algorithm - Minimum Spanning Tree
     1. pick smallest edge
@@ -114,6 +373,32 @@ Kruskal's Algorithm - Minimum Spanning Tree
     6. so, time complexity will be O(ElogE)
     7. time complexity: O(n^2logn) or O(ElogE)
     8. space complexity: O(n^2) or O(E), E ~ V^2 in worst case as each V can be connected to all other V = V * (V-1) ~ V^2
+
+def minCostConnectPoints(self, points: List[List[int]]) -> int:
+    nodes = set(tuple(point) for point in points)
+    dsu = DisjointSetUnion(nodes)
+    n = len(points)
+
+    # distances
+    distances = []
+    for i in range(n):
+        point1 = tuple(points[i])
+
+        for j in range(i+1, n):
+            point2 = tuple(points[j])
+            distance = abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+            distances.append((distance, point1, point2))
+
+    distances.sort()
+
+    min_cost = 0
+    for distance, point1, point2 in distances:
+        if dsu.union(point1, point2):
+            min_cost += distance
+    
+    return min_cost
+
+
 
 
 
@@ -132,6 +417,42 @@ Prim's Algorithm - Minimum Spanning Tree (remove cycles)
     10. time complexity: O(n^2) or O(E)
     11. space complexity: O(n^2) or O(E), E ~ V^2 in worst case as each V can be connected to all other V = V * (V-1) ~ V^2
 
+def minCostConnectPoints(self, points: List[List[int]]) -> int:
+    n = len(points)
+    adj = defaultdict(list)
+
+    for i in range(n):
+        point1 = tuple(points[i])
+
+        for j in range(i+1, n):
+            point2 = tuple(points[j])
+            distance = abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+            adj[point1].append((distance, point2))
+            adj[point2].append((distance, point1))
+
+    min_heap = [(0, tuple(points[0]))]
+    min_cost = 0
+    visited = set()
+
+    while len(visited) < n:
+        distance, point = heapq.heappop(min_heap)
+        if point in visited:
+            continue
+
+        min_cost += distance
+        visited.add(point)
+
+        for (adj_distance, adj_point) in adj[point]:
+            if adj_point in visited:
+                continue
+            heapq.heappush(min_heap, (adj_distance, adj_point))
+    
+    return min_cost
+
+
+
+
+
 
 Maximum bipartite matching
     1. S1, S2, -> 2 sets forming a bipartite
@@ -149,3 +470,36 @@ Maximum bipartite matching
             2. return False
         3. if dfs is true, increment count
     5. return count
+
+
+
+
+Hierholzer's Algorithm
+Given a directed Eulerian graph, the task is to print an Euler circuit. An Euler circuit is a path that traverses every edge of a graph exactly once, and the path ends on the starting vertex.
+
+def find_eulerian_circuit(adj):
+    circuit = []
+    
+    def visit(u):
+        # While there are remaining edges from node u
+        while adj[u]:
+            # Remove the edge to the next neighbor to prevent reuse
+            v = adj[u].pop()
+            visit(v)
+        # Add to circuit after all edges from u are exhausted (post-order)
+        circuit.append(u)
+
+    
+    visit(start_node)
+    
+    # Result is in reverse order because of post-order addition
+    return circuit[::-1]
+
+# Example Usage:
+# Graph: 0 -> 1 -> 2 -> 0
+graph = {
+    0: [1],
+    1: [2],
+    2: [0]
+}
+print(find_eulerian_circuit(graph))
