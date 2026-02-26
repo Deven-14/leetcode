@@ -4,6 +4,7 @@ best example - 486. Predict the Winner
 
 1. min max - recursively
 2. using 'or' and 'and' - recursively 
+    1. this method is specific to when they mention "check if any one player can win"
 
 
 player 1 & player 2, player 1 starts and check if player 1 wins
