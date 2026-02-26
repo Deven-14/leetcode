@@ -9,4 +9,14 @@ interval[0] <= newInterval[0] <= interval[1] or interval[0] <= newInterval[1] <=
 (4 <= 5 <= 6) satisfies this condition of overlap
 
 
-For, Non-overlapping Intervals, sort by end and compare prev_interval.end > interval.start to find minimum overlapping intervals
+Sorting:
+
+    1. Sort by start → when you want to merge or detect overlap forward
+
+        1. You only need to compare each interval with the previous merged one.
+        2. You don’t need to look backward
+        3. One pass is enough
+        4. "If an interval overlaps, it must overlap with the previous one."
+        5. Because all earlier intervals start even earlier — so if they didn’t overlap, they’re already merged.
+
+    2. Sort by end → when you want to greedily select maximum non-overlapping intervals OR (Minimize removals)
