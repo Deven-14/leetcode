@@ -112,3 +112,130 @@ class Solution:
 - **More memory efficient** in some cases → Can use **1D DP instead of 2D** if we only depend on `dp[i+1]`.
 
 This method guarantees that **your solution runs efficiently** for `n < 1000`. 🚀
+
+
+
+
+
+
+Choosing between the 3 methods:
+
+
+Techniques
+    1. Recursive (Top-Down)
+        1. 10, 9, 8,... with base conditions
+    2. Top-Down iteractive
+        1. 10, 9, 8,... with base conditions using dp[] or cache{}
+        2. the for loop runs from n-1 to 0
+        3. Less common
+    3. Bottom-Up iteractive
+        1. 0, 1, from base conditions, ... to 8, 9, 10
+        2. uses dp[] or cache{}
+        3. the for loop runs from 0 to n-1
+
+
+Choosing between recursive top-down (memoization), iterative top-down, and iterative bottom-up in DP is mostly about state dependency direction, constraints, and implementation risk. Here’s a practical decision framework you can use in interviews or real problems.
+
+Step 1: Start with the dependency graph (most important)
+Ask:
+Does a state depend on smaller/simpler states in a clear order?
+
+
+If dependencies naturally go from small → large
+Example:
+dp[i] depends on dp[i-1], dp[i-2]
+dp[i][j] depends on dp[i-1][j], dp[i][j-1]
+
+→ Use Iterative Bottom-Up
+Why?
+Natural table filling order
+Fastest (no recursion overhead)
+Memory can often be optimized
+Typical problems
+Fibonacci
+Knapsack
+LCS / Edit Distance
+Grid paths
+
+
+If dependency order is complex or conditional
+Example:
+State depends on variable transitions
+Hard to know fill order
+Graph-like transitions
+
+→ Use Recursive Top-Down (Memoization)
+Why?
+You compute only needed states
+No need to figure iteration order
+Cleaner for branching logic
+Typical problems
+Word Break
+Partition problems
+DP on trees
+Digit DP
+Game DP / minimax
+When transitions depend on conditions or loops
+
+
+Step 2: Check constraints (performance / memory)
+Use Bottom-Up when:
+All states will be needed anyway
+Constraints are large (e.g., n = 10^5)
+Recursion depth may overflow
+You need optimal performance
+
+Rule of thumb
+
+If states ≈ input size and all will be visited → Bottom-Up
+Use Top-Down when:
+Many states won’t be visited
+State space is large but sparse
+Problem feels like DFS with overlapping subproblems
+
+Example:
+dp(index, remaining_sum)
+But many sums are impossible
+
+
+Step 3: When to use Iterative Top-Down
+This is less commonly discussed. It means:
+
+Iterative approach
+
+But processing states in a dependency-driven order (like BFS / topo)
+Use when:
+State graph is not strictly small→large
+But recursion is risky
+Example: DP on DAG, shortest path style DP
+
+Examples
+Longest path in DAG
+DP with BFS layers
+State transitions like graph traversal
+
+Quick Decision Cheat Sheet
+SituationApproachEasy natural order (index, length, grid)Bottom-UpHard to figure orderRecursive Top-DownSparse state spaceRecursive Top-DownLarge constraints / recursion riskBottom-UpTree DP / DFS structureRecursive Top-DownDAG / graph transitionsIterative Top-Down
+
+
+Interview Strategy (Very Practical)
+
+Write recursive solution first
+Add memo → Top-Down DP
+If needed, convert to Bottom-Up
+Interviewers like this flow.
+
+
+Example Intuition
+LCS
+States depend on smaller prefixes → Bottom-Up
+Word Break
+Branching choices, unknown valid states → Top-Down
+Tree diameter / subtree DP
+Natural DFS → Top-Down
+
+Mental Rule (Fast)
+Ask:
+Can I sort states by size and fill? → Bottom-Up
+Does it feel like DFS with caching? → Top-Down
+Is recursion depth risky? → Bottom-Up

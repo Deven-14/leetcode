@@ -16,7 +16,23 @@ Questions:
 
 
 474. Ones and Zeroes
-    pick / not pick
+    pick / not pick --------------- *****************************
+
+
+
+Techniques
+    1. Recursive (Top-Down)
+        1. 10, 9, 8,... with base conditions
+    2. Top-Down iteractive
+        1. 10, 9, 8,... with base conditions using dp[] or cache{}
+        2. the for loop runs from n-1 to 0
+        3. Less common
+    3. Bottom-Up iteractive
+        1. 0, 1, from base conditions, ... to 8, 9, 10
+        2. uses dp[] or cache{}
+        3. the for loop runs from 0 to n-1
+
+
 
 
 Pointers:
