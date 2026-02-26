@@ -1,0 +1,4 @@
+Use can combine prefix_sums with BINARY SEARCH
+
+eg. neetcode question "Minimum Size Subarray Sum"
+in sliding window
