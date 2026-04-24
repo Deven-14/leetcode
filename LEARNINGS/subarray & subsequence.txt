@@ -28,3 +28,12 @@ whenever you are thinking that you need to look ahead for the same character / i
 
 Longest Repeating Character Replacement
 this as well, instead of looking ahead when the non-matching values will come, calculate and lookbehind when we cross that k value
+
+
+
+
+
+def is_subsequence(string1, string2):
+    # check if string2 is subsequence of string1
+    it = iter(string1)
+    return all(c in it for c in string2)
