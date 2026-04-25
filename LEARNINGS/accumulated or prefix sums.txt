@@ -1,0 +1,36 @@
+Important property of accumulated or prefix sums
+
+Examples:
+525. Contiguous Array
+523. Continuous Subarray Sum
+
+
+if we have an array of [1, -1]
+[-1, 1, 1, 1, -1, -1, 1]
+prefix sums = [-1, 0, 1, 2, 1, 0, 1]
+
+between the first occurrence and the any occurance of the same number
+the sum of the numbers will be 0
+that's when we can get the same number
+so, for 1 at idx2, and 1 at idx6, it is [1, 1, -1, -1] = 0
+
+In this case we had take [1, -1], which would make the sum 0.
+# see question 525. for the above Example
+
+
+if we have an array [23,2,4,7,7]
+and if we want to know the longest arry with whose elements sum up to 'k' or whose elements are divisible by 'k'
+let k = 6
+then 
+prefix sum = [23,25,29,36,43]
+with % k
+prefix sum % k = [5, 1, 5, 0, 1]
+
+Here - start at idx0 (5) to idx2 (5)
+This can only happen when we add 'k' or a multiple of 'k'
+eg. hash = (num + prime) % prime - to avoid the certain issues
+similarly (5) idx0 to (5) idx2 represents the same thing, i.e. [2, 4] = 6
+so, length = idx2 - idx0 = 2
+
+similarly (1) idx1 to 1 idx4, [4, 7, 7] = 18
+so, length = idx4 - idx1 = 3
