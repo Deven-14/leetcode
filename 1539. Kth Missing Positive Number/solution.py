@@ -36,3 +36,18 @@ class Solution:
         
         return i + k
 
+class Solution:
+    def findKthPositive(self, arr: List[int], k: int) -> int:
+        n = len(arr)
+        i, j = 0, n
+
+        while i < j:
+            mid = (i + j) // 2
+            diff = arr[mid] - (mid + 1)
+
+            if diff < k:
+                i = mid + 1
+            else:
+                j = mid
+        
+        return i + k
