@@ -123,3 +123,107 @@ class Solution:
 
 
 # * beats 98%
+
+
+
+
+
+
+
+
+
+# Tried the question again
+
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        n = len(s)
+        dp = [[False] * n for _ in range(n)]
+        count = n
+
+        # length 1
+        for i in range(n):
+            dp[i][i] = True
+        
+        # length 2
+        for i in range(1, n):
+            if s[i] == s[i-1]:
+                dp[i-1][i] = True
+                count += 1
+        
+        # length 3 to n => idx [2, n)
+        for l in range(2, n):
+            for i in range(n - l): # row
+                j = i + l # col
+                if dp[i + 1][j - 1] and s[i] == s[j]:
+                    dp[i][j] = True
+                    count += 1
+        
+        return count
+
+
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        n = len(s)
+        count = n
+
+        def count_palindromes(i, j):
+            c = 0
+            while i >= 0 and j < n and s[i] == s[j]:
+                c += 1
+                i -= 1
+                j += 1
+            return c
+
+    
+        for i in range(1, n):
+            if s[i] == s[i - 1]:
+                count += count_palindromes(i - 2, i + 1) + 1
+            count += count_palindromes(i - 1, i + 1)
+
+        return count
+
+
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        n = len(s)
+        count = 0
+
+        def count_palindromes(i, j):
+            c = 0
+            while i >= 0 and j < n and s[i] == s[j]:
+                c += 1
+                i -= 1
+                j += 1
+            return c
+
+    
+        for i in range(n):
+            count += count_palindromes(i, i)
+            count += count_palindromes(i - 1, i)
+
+        return count
+
+
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        n = len(s)
+        if n <= 1: return n
+        if len(set(s)) == 1: return n * (n + 1) // 2
+
+        def count_palindromes(i, j):
+            c = 0
+            while i >= 0 and j < n and s[i] == s[j]:
+                c += 1
+                i -= 1
+                j += 1
+            return c
+
+        count = 0
+        for i in range(n):
+            count += count_palindromes(i, i)
+            count += count_palindromes(i - 1, i)
+
+        return count
+
+
+
