@@ -46,3 +46,13 @@ class Solution:
 # * using upper bound we get index 7
 
 # you can also use bisect_left and bisect_right from the bisect module
+
+
+
+
+
+
+# * Best Use of binary search / bisect with STRINGS:
+
+# * 648. Replace Words
+# https://leetcode.com/problems/replace-words/
