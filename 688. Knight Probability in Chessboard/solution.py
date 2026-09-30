@@ -53,3 +53,56 @@ class Solution:
         return dfs(k, row, column)
             
             
+class Solution:
+    def knightProbability(self, n: int, k: int, row: int, column: int) -> float:
+        
+        @cache
+        def dfs(kmoves, i, j):
+            if i < 0 or i >= n or j < 0 or j >= n:
+                return 0
+            
+            if kmoves == 0:
+                return 1
+            
+            moves = (
+                (i - 2, j - 1),
+                (i - 1, j - 2),
+                (i - 2, j + 1),
+                (i - 1, j + 2),
+                (i + 2, j - 1),
+                (i + 1, j - 2),
+                (i + 2, j + 1),
+                (i + 1, j + 2)
+            )
+
+            return sum(dfs(kmoves - 1, x, y) for x, y in moves)
+        
+        return dfs(k, row, column) / 8 ** k
+            
+            
+class Solution:
+    def knightProbability(self, n: int, k: int, row: int, column: int) -> float:
+        moves = (
+                (-2, -1),
+                (-1, -2),
+                (-2, +1),
+                (-1, +2),
+                (+2, -1),
+                (+1, -2),
+                (+2, +1),
+                (+1, +2)
+            )
+        
+        @cache
+        def dfs(kmoves, i, j):
+            if i < 0 or i >= n or j < 0 or j >= n:
+                return 0
+            
+            if kmoves == 0:
+                return 1
+            
+            return sum(dfs(kmoves - 1, i + dx, j + dy) for dx, dy in moves)
+        
+        return dfs(k, row, column) / 8 ** k
+            
+            
