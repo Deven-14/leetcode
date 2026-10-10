@@ -134,3 +134,25 @@ class Solution:
         return dp[m-1]
 
 
+class Solution:
+    def minimumDeleteSum(self, s1: str, s2: str) -> int:
+        o1 = list(ord(char) for char in s1)
+        o2 = list(ord(char) for char in s2)
+
+        n, m = len(s1) + 1, len(s2) + 1
+        dp = [0] * m
+
+        for i in range(1, n):
+            prev = dp[0]
+
+            for j in range(1, m):
+                t, prev = prev, dp[j]
+
+                if s1[i-1] == s2[j-1]:
+                    dp[j] = t + o2[j-1]
+                else:
+                    dp[j] = max(dp[j], dp[j-1])
+                    
+        return sum(o1) + sum(o2) - 2 * dp[m-1]
+
+
