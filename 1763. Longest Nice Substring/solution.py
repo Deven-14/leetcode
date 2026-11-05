@@ -32,4 +32,19 @@ class Solution:
                 max_len_substr = sub_substr
     
         return max_len_substr
-            
+
+
+
+class Solution:
+    def longestNiceSubstring(self, s: str) -> str:
+        if not s: return ""
+
+        set_s = set(s)
+        for i, char in enumerate(s):
+            if char.swapcase() not in set_s:
+                sub1 = self.longestNiceSubstring(s[:i])
+                sub2 = self.longestNiceSubstring(s[i+1:])
+                return max(sub1, sub2, key=len)
+        
+        return s
+
