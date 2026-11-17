@@ -95,3 +95,38 @@ class Solution:
         trie = Trie(words)
         return trie.search()
 
+
+class Solution:
+    def longestWord(self, words: list[str]) -> str:
+        words.sort()
+        longest = ''
+        word_set = {''}
+
+        for word in words:
+            if word[:-1] in word_set:
+                word_set.add(word)
+
+                if len(word) > len(longest):
+                    longest = word
+            
+        return longest
+
+
+class Solution:
+    def longestWord(self, words: list[str]) -> str:
+        words.sort()
+        longest = ''
+        word_set = {''}
+        longest_len = 0
+
+        for word in words:
+            if word[:-1] in word_set:
+                word_set.add(word)
+
+                if len(word) > longest_len:
+                    longest = word
+                    longest_len = len(word)
+            
+        return longest
+
+
